@@ -1,0 +1,1 @@
+Day 1 : Algorithmic Thinking and Language Proficiency
