@@ -33,7 +33,7 @@ public class WordFrequencyCounter {
                 return freqCompare != 0 ? freqCompare : a.getKey().compareTo(b.getKey());
             });
 
-            // Print the results
+
             for (Map.Entry<String, Integer> entry : sortedWords) {
                 System.out.println(entry.getKey() + ": " + entry.getValue());
             }
