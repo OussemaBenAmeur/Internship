@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>BookStore Mockup</title>
+</head>
+<body>
+<h1>Mini BookStore</h1>
+
+<h2>Add Book</h2>
+<input id="title" placeholder="Title" />
+<input id="author" placeholder="Author" />
+<button onclick="addBook()">Add</button>
+
+<h2>Books</h2>
+<button onclick="listBooks()">List Books</button>
+<ul id="bookList"></ul>
+
+<h2>Search</h2>
+<input id="search" placeholder="Keyword" />
+<button onclick="searchBooks()">Search</button>
+<ul id="searchResults"></ul>
+
+<script>
+    const books = [];
+
+    function addBook() {
+        const title = document.getElementById("title").value;
+        const author = document.getElementById("author").value;
+        books.push({ title, author });
+        alert(`Added: ${title} by ${author}`);
+    }
+
+    function listBooks() {
+        const list = document.getElementById("bookList");
+        list.innerHTML = "";
+        books.forEach(b => {
+            const li = document.createElement("li");
+            li.textContent = `${b.title} by ${b.author}`;
+            list.appendChild(li);
+        });
+    }
+
+    function searchBooks() {
+        const keyword = document.getElementById("search").value.toLowerCase();
+        const results = document.getElementById("searchResults");
+        results.innerHTML = "";
+        books.forEach(b => {
+            if (b.title.toLowerCase().includes(keyword)) {
+                const li = document.createElement("li");
+                li.textContent = `${b.title} by ${b.author}`;
+                results.appendChild(li);
+            }
+        });
+    }
+</script>
+</body>
+</html>
