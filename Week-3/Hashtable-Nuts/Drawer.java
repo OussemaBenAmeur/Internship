@@ -45,11 +45,11 @@ public class Drawer {
             }
 
 
-
+//-----------------------------------
             if (current == null) {//louken bucket feregh
                 NOut.println(NMsg.ofC(color, bucketTop));//rasou
                 NOut.print(NMsg.ofC(color, bucketMid + arrow));//wostou
-                NOut.println("##:f280:N## ##:f210:U## ##:f141:L## ##:f70:L##");//wostou
+                NOut.println("##:f280:N ## ##:f210:U## ##:f141:L## ##:f70:L ##");//wostou
                 NOut.println(NMsg.ofC(color, bucketBot));//sa9ih
             } else
             {//louken bucket fih hajeet
@@ -88,7 +88,7 @@ public class Drawer {
                 String arrowSpacing = repeat(' ', arrow.length());
                 NOut.println(NMsg.ofC(color, bucketTop + arrowSpacing + chainLine1.toString()));
                 NOut.print(NMsg.ofC(color, bucketMid + arrow + chainLine2.toString() + arrow  ));
-                NOut.println("##:f280:N## ##:f210:U## ##:f141:L## ##:f70:L##");//wostou
+                NOut.println("##:f280:N## ##:f210:U## ##:f141:L## ##:f70:L##");
                 NOut.println(NMsg.ofC(color, bucketBot + arrowSpacing + chainLine3.toString()));
             }
 

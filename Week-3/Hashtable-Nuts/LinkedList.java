@@ -1,5 +1,8 @@
 
 package org.example;
+
+import net.thevpc.nuts.NOut;
+
 class LinkedList {
     Node head;
 
@@ -14,7 +17,6 @@ class LinkedList {
             newNode.next = head;
         }
         head = newNode;
-        System.out.println("Key added: " + key);
     }
 
     public boolean delete(String key) {
@@ -30,26 +32,24 @@ class LinkedList {
                 if (current.next != null) {
                     current.next.prev = current.prev;
                 }
-                System.out.println("Key deleted: " + key);
+                NOut.println("Key deleted: " + key);
                 return true;
             }
             current = current.next;
         }
-        System.out.println("Key not found: " + key);
+        NOut.println("Key not found: " + key);
         return false;
     }
 
-    public boolean find(String key) {
+    public boolean findN(String key) {
         Node current = head;
-
         while (current != null) {
             if (current.key.equals(key)) {
-                System.out.println("Key found: " + key);
+
                 return true;
             }
             current = current.next;
         }
-        System.out.println("Key not found: " + key);
         return false;
     }
 
@@ -59,13 +59,12 @@ class LinkedList {
 
         while (current != null) {
             if (current.key.equals(key)) {
-                System.out.println("Key '" + key + "' found at position: " + index);
                 return index;
             }
             current = current.next;
             index++;
         }
-        System.out.println("Key '" + key + "' not found in list.");
+
         return -1;
     }
 }

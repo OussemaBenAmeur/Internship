@@ -1,5 +1,8 @@
 package org.example;
-class XHashtable {
+
+import net.thevpc.nuts.NOut;
+
+public class XHashtable {
     private int SIZE;
     LinkedList[] table;
 
@@ -7,7 +10,7 @@ class XHashtable {
         if (size > 0) {
             SIZE = size;
         } else {
-            System.out.println("Invalid size. Using default size 10.");
+            NOut.println("Invalid size. Using default size 10.");
             SIZE = 10;
         }
 
@@ -29,29 +32,39 @@ class XHashtable {
     }
 
     public void add(String key) {
-        int index = hash(key);
-        table[index].add(key);
-    }
+        if (find(key)){
+            NOut.println("Duplicate key.");
+        }
+        else {
+            int index = hash(key);
+            table[index].add(key);
+            NOut.println("Key added: " + key);
 
+        }
+
+    }
     public boolean delete(String key) {
+
         int index = hash(key);
         return table[index].delete(key);
     }
-
-
     public boolean find(String key) {
+
+
         int index = hash(key);
-        return table[index].find(key);
+
+        if (table[index].findN(key)) {
+            NOut.println("Key " + key + " found at position in bucket : "
+                    + index + " and at position in list " + table[index].findPosition(key));
+            return true;
+        } else {
+            NOut.println("Key " + key + " not found.");
+            return false;
+        }
     }
 
-    public int findPositionInBucket(String key) {
-        int index = hash(key);
-        System.out.println("Bucket index: " + index);
-        return index;
     }
 
-    public int findPositionInList(String key) {
-        int index = hash(key);
-        return table[index].findPosition(key);
-    }
-}
+
+
+
