@@ -21,7 +21,7 @@ public class XHashtable {
         return SIZE;
     }
 
-    private int hash(String key) {
+    public int hash(String key) {
         int hashValue = 0;
         for (char c : key.toCharArray()) {
             hashValue += c;
@@ -31,12 +31,10 @@ public class XHashtable {
 
     public boolean add(String key) {
         if (findN(key)) {
-            System.out.println("Duplicate key.");
             return false;
         } else {
             int index = hash(key);
             table[index].add(key);
-            System.out.println("Key added: " + key);
             return true;
         }
     }
