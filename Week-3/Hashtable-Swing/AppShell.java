@@ -17,7 +17,7 @@ public class AppShell {
         while (true) {
             String input = JOptionPane.showInputDialog(
                     null,
-                    "Enter hashtable size :",
+                    "Enter hashtable size:",
                     "Hashtable Size",
                     JOptionPane.QUESTION_MESSAGE);
 
@@ -39,15 +39,6 @@ public class AppShell {
                 JOptionPane.showMessageDialog(
                         null,
                         "Input must be strictly positive",
-                        "INVALID INPUT",
-                        JOptionPane.ERROR_MESSAGE);
-                continue;
-            }
-
-            if (size > 1_000_000_000) {
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Number too high",
                         "INVALID INPUT",
                         JOptionPane.ERROR_MESSAGE);
                 continue;

@@ -2,12 +2,32 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
-public class XHashtableDrawer extends JPanel {
+public class XHashtableDrawer extends JPanel implements ActionListener {
+
     private final XHashtable ht;
+
+    private ArrayList<WordAnimation> animators = new ArrayList<>();
+    private Timer timer;
 
     public XHashtableDrawer(XHashtable ht) {
         this.ht = ht;
+
+        timer = new Timer(20, this);
+        timer.start();
+    }
+
+    public void addAnimatedWord(String key, int xStart, int yStart, int xTarget, int yTarget) {
+        animators.add(new WordAnimation(key, xStart, yStart, xTarget, yTarget));
+    }
+
+    public int[] getBucketCoordinates(int index) {
+        int bucketX = 20;
+        int bucketY = 20 + index * (30 + 20);
+        return new int[]{bucketX + 60, bucketY + 20};
     }
 
     @Override
@@ -16,7 +36,7 @@ public class XHashtableDrawer extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setStroke(new BasicStroke(2));
+
 
         int bucketX = 20;
         int bucketY = 20;
@@ -25,6 +45,7 @@ public class XHashtableDrawer extends JPanel {
         final int nodeWidth = 60;
         final int nodeHeight = 25;
         final int spacing = 20;
+
 
         for (int i = 0; i < ht.getSize(); i++) {
             int lineX = bucketX + bucketWidth / 2;
@@ -57,7 +78,6 @@ public class XHashtableDrawer extends JPanel {
                 if (current.next == null) {
                     int endX = nodeX;
                     int centerY = bucketY + (bucketHeight / 2);
-                    int horizontalLength = 10;
                     g2d.drawLine(endX - spacing, centerY, endX, centerY);
                     g2d.drawLine(endX, centerY - 5, endX, centerY + 5);
                 }
@@ -67,5 +87,23 @@ public class XHashtableDrawer extends JPanel {
 
             bucketY += bucketHeight + spacing;
         }
+
+
+        for (WordAnimation wa : animators) {
+            wa.draw(g2d);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Iterator<WordAnimation> iterator = animators.iterator();
+        while (iterator.hasNext()) {
+            WordAnimation wa = iterator.next();
+            wa.moveStep();
+            if (!wa.isMoving) {
+                iterator.remove();
+            }
+        }
+        repaint();
     }
 }

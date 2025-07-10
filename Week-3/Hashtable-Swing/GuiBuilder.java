@@ -3,12 +3,12 @@ package org.example;
 import javax.swing.*;
 import java.awt.*;
 
-public class guiBuilder {
+public class GuiBuilder {
 
     public static void createAndShowGui(XHashtable ht) {
         JFrame frame = new JFrame("Hashtable");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(600, 500);
+        frame.setSize(800, 600);
 
         XHashtableDrawer drawerPanel = new XHashtableDrawer(ht);
         frame.add(drawerPanel, BorderLayout.CENTER);
@@ -36,8 +36,11 @@ public class guiBuilder {
                 AppShell.showMessage(frame, "Duplicate key",
                         "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
+                int bucketIndex = ht.getBucketIndex(key);
+                int[] target = drawerPanel.getBucketCoordinates(bucketIndex);
+                drawerPanel.addAnimatedWord(key, 100, 50, target[0], target[1]);
+
                 ht.add(key);
-                drawerPanel.repaint();
                 keyTextField.setText("");
             }
         });

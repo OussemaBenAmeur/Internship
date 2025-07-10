@@ -28,6 +28,20 @@ public class XHashtable {
         }
         return hashValue % SIZE;
     }
+    public void deleteNodeRef(Node node, int bucketIndex) {
+        if (table[bucketIndex].head == node) {
+            table[bucketIndex].head = node.next;
+            return;
+        }
+        Node prev = table[bucketIndex].head;
+        while (prev != null && prev.next != null) {
+            if (prev.next == node) {
+                prev.next = node.next;
+                break;
+            }
+            prev = prev.next;
+        }
+    }
 
     public boolean add(String key) {
         if (findN(key)) {
