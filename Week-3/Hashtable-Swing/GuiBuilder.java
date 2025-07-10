@@ -49,9 +49,15 @@ public class GuiBuilder {
             String key = AppShell.getKeyFromUser(keyTextField, frame);
             if (key == null) return;
 
-            ht.delete(key);
-            drawerPanel.repaint();
-            keyTextField.setText("");
+            if (ht.findN(key)) {
+                int bucketIndex = ht.getBucketIndex(key);
+                int[] pos = drawerPanel.getNodeCoordinates(bucketIndex, key);
+                drawerPanel.addFadeOut(key, pos[0], pos[1]);
+                ht.delete(key);
+                keyTextField.setText("");
+            } else {
+                AppShell.showMessage(frame, "Key not found", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         findButton.addActionListener(e -> {

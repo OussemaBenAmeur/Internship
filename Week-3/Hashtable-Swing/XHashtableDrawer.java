@@ -12,12 +12,16 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
 
     private ArrayList<WordAnimation> animators = new ArrayList<>();
     private Timer timer;
+    private ArrayList<WordFadeOut> fadeOuts = new ArrayList<>();
 
     public XHashtableDrawer(XHashtable ht) {
         this.ht = ht;
 
         timer = new Timer(20, this);
         timer.start();
+    }
+    public void addFadeOut(String key, int x, int y) {
+        fadeOuts.add(new WordFadeOut(key, x, y));
     }
 
     public void addAnimatedWord(String key, int xStart, int yStart, int xTarget, int yTarget) {
@@ -28,6 +32,32 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
         int bucketX = 20;
         int bucketY = 20 + index * (30 + 20);
         return new int[]{bucketX + 60, bucketY + 20};
+    }
+    public int[] getNodeCoordinates(int bucketIndex, String key) {
+        int bucketX = 20;
+        int bucketY = 20 + bucketIndex * (30 + 20);
+
+        int bucketWidth = 30;
+        int spacing = 20;
+        int nodeWidth = 60;
+
+        int nodeX = bucketX + bucketWidth + spacing;
+        int nodeY = bucketY + 2;
+
+        Node current = ht.table[bucketIndex].head;
+        while (current != null) {
+            if (current.key.equals(key)) {
+                return new int[]{nodeX + 30, nodeY + 17}; // match your drawString offset
+            }
+
+            FontMetrics fm = getFontMetrics(new Font("Arial", Font.BOLD, 16));
+            int stringWidth = fm.stringWidth(current.key);
+            nodeX += nodeWidth + spacing + stringWidth;
+            current = current.next;
+        }
+
+        // fallback if not found
+        return new int[]{nodeX, nodeY};
     }
 
     @Override
@@ -90,9 +120,13 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
 
 
         for (WordAnimation wa : animators) {
-            wa.draw(g2d);
+            wa.draw(g2d);}
+            for (WordFadeOut fade : fadeOuts) {
+                fade.draw(g2d);
+            }
+
         }
-    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -105,5 +139,12 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
             }
         }
         repaint();
+        Iterator<WordFadeOut> fadeIt = fadeOuts.iterator();
+        while (fadeIt.hasNext()) {
+            WordFadeOut fade = fadeIt.next();
+            fade.fadeStep();
+            if (fade.isDone()) fadeIt.remove();
+        }
+
     }
 }
