@@ -78,7 +78,6 @@ public class GuiBuilder {
         });
 
         exitButton.addActionListener(e -> System.exit(0));
-
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

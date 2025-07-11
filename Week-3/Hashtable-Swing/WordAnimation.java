@@ -19,12 +19,12 @@ public class WordAnimation {
 
     public void moveStep() {
         if (!isMoving) return;
-        if (x < xTarget) x += 1;
-        if (x > xTarget) x -= 1;
-        if (y < yTarget) y += 1;
-        if (y > yTarget) y -= 1;
+        if (x < xTarget) x += 10;
+        if (x > xTarget) x -= 10;
+        if (y < yTarget) y += 10;
+        if (y > yTarget) y -= 10;
 
-        if (Math.abs(x - xTarget) < 1 && Math.abs(y - yTarget) < 1) {
+        if (Math.abs(x - xTarget) < 3 && Math.abs(y - yTarget) < 3) {
             x = xTarget;
             y = yTarget;
             isMoving = false;
@@ -34,7 +34,7 @@ public class WordAnimation {
     public void draw(Graphics2D g2d) {
         if (!isMoving) return;
 
-        g2d.setColor(Color.RED);
+        g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 16));
         g2d.drawString(key, x, y);
     }

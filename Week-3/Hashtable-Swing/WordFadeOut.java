@@ -5,7 +5,7 @@ import java.awt.*;
 public class WordFadeOut {
     String key;
     int x, y;
-    float alpha; // from 1.0 to 0.0
+    float alpha;
 
     public WordFadeOut(String key, int x, int y) {
         this.key = key;
@@ -15,7 +15,7 @@ public class WordFadeOut {
     }
 
     public void fadeStep() {
-        alpha -= 0.02f; // how fast to fade
+        alpha -= 0.02f;
         if (alpha < 0) alpha = 0;
     }
 
@@ -29,6 +29,6 @@ public class WordFadeOut {
         g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Arial", Font.BOLD, 16));
         g2d.drawString(key, x, y);
-        g2d.setComposite(original); // restore
+        g2d.setComposite(original);
     }
 }

@@ -20,19 +20,23 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
         timer = new Timer(20, this);
         timer.start();
     }
+    //***********
     public void addFadeOut(String key, int x, int y) {
         fadeOuts.add(new WordFadeOut(key, x, y));
     }
+    //***********
 
     public void addAnimatedWord(String key, int xStart, int yStart, int xTarget, int yTarget) {
         animators.add(new WordAnimation(key, xStart, yStart, xTarget, yTarget));
     }
+    //***********
 
     public int[] getBucketCoordinates(int index) {
         int bucketX = 20;
         int bucketY = 20 + index * (30 + 20);
         return new int[]{bucketX + 60, bucketY + 20};
     }
+    //***********
     public int[] getNodeCoordinates(int bucketIndex, String key) {
         int bucketX = 20;
         int bucketY = 20 + bucketIndex * (30 + 20);
@@ -47,7 +51,7 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
         Node current = ht.table[bucketIndex].head;
         while (current != null) {
             if (current.key.equals(key)) {
-                return new int[]{nodeX + 30, nodeY + 17}; // match your drawString offset
+                return new int[]{nodeX + 30, nodeY + 17};
             }
 
             FontMetrics fm = getFontMetrics(new Font("Arial", Font.BOLD, 16));
@@ -56,9 +60,10 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
             current = current.next;
         }
 
-        // fallback if not found
+
         return new int[]{nodeX, nodeY};
     }
+    //***********
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -101,7 +106,9 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
                 int stringWidth = fm.stringWidth(current.key);
 
                 g2d.drawRect(nodeX, nodeY, nodeWidth + stringWidth, nodeHeight);
+
                 g2d.drawString(current.key, nodeX + 30, nodeY + 17);
+
 
                 nodeX += nodeWidth + spacing + stringWidth;
 
@@ -118,16 +125,17 @@ public class XHashtableDrawer extends JPanel implements ActionListener {
             bucketY += bucketHeight + spacing;
         }
 
-
         for (WordAnimation wa : animators) {
-            wa.draw(g2d);}
+            wa.draw(g2d);
+        }
+        //for (WordAnimation wa : animators) {wa.draw(g2d);}
             for (WordFadeOut fade : fadeOuts) {
                 fade.draw(g2d);
             }
 
+
         }
-
-
+    //***********
     @Override
     public void actionPerformed(ActionEvent e) {
         Iterator<WordAnimation> iterator = animators.iterator();
